@@ -1,0 +1,57 @@
+{
+  "name": "WargaKu RT 02 RW 11",
+  "short_name": "WargaKu",
+  "description": "Aplikasi administrasi warga RT 02 RW 11 Kampung Masjid Kelurahan Kartasura",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#D32F2F",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "id",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Profil Warga",
+      "url": "/",
+      "description": "Lihat profil keluarga"
+    },
+    {
+      "name": "Pengumuman RT",
+      "url": "/",
+      "description": "Lihat pengumuman terbaru"
+    }
+  ],
+  "categories": ["utilities", "social"],
+  "screenshots": []
+}
