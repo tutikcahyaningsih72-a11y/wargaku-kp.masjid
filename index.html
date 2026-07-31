@@ -11,11 +11,7 @@
 <meta name="theme-color" content="#D32F2F">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="msapplication-TileColor" content="#D32F2F">
-
-<!-- Apple touch icon -->
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-<!-- PWA Manifest (inline data URI) -->
 <link rel="manifest" href="/manifest.json">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -371,6 +367,7 @@ textarea.input-field{resize:none;min-height:90px}
           <button class="menu-item" onclick="openPengumuman('aspirasi')"><span class="menu-icon">📢</span><span class="menu-label">Aspirasi</span></button>
           <button class="menu-item" onclick="goPage('keuangan')"><span class="menu-icon">💰</span><span class="menu-label">Keuangan</span></button>
           <button class="menu-item" onclick="goPage('galeri')"><span class="menu-icon">📸</span><span class="menu-label">Galeri</span></button>
+          <button class="menu-item" onclick="goPage('arsip')"><span class="menu-icon">🗄️</span><span class="menu-label">Arsip RT</span></button>
           <button class="menu-item" onclick="showToast('📞 Ketua RT: 0812-xxxx-xxxx')"><span class="menu-icon">📞</span><span class="menu-label">Kontak RT</span></button>
           <button class="menu-item" onclick="showToast('🚨 Hubungi Ketua RT segera')"><span class="menu-icon">🚨</span><span class="menu-label">Darurat</span></button>
           <button class="menu-item" onclick="goPage('keuangan');switchKeuanganView('pribadi')"><span class="menu-icon">🧾</span><span class="menu-label">Iuran Saya</span></button>
@@ -546,13 +543,40 @@ textarea.input-field{resize:none;min-height:90px}
       </div>
     </div>
 
+    <!-- ── ARSIP DIGITAL RT ── -->
+    <div id="page-arsip" class="page">
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px 0">
+        <button onclick="goPage('beranda')" style="background:var(--gray-100);border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0">←</button>
+        <span style="font-size:15px;font-weight:900;color:var(--gray-800)">Arsip Digital RT</span>
+      </div>
+      <div style="background:#EDE7F6;border-left:4px solid #4527A0;padding:10px 14px;margin:10px 16px 0;border-radius:0 8px 8px 0;font-size:11px;color:#4527A0;font-weight:700;line-height:1.6">
+        🗄️ Semua arsip RT tersimpan digital — notulen, nota, dan dokumen penting. Hanya bisa dilihat warga, dikelola admin.
+      </div>
+      <!-- Sub-tab -->
+      <div style="display:flex;gap:0;margin:12px 16px 0;border:2px solid #4527A0;border-radius:8px;overflow:hidden">
+        <button id="arsip-tab-dokumen" style="flex:1;padding:10px 4px;border:none;background:#4527A0;color:white;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer" onclick="switchArsipTab('dokumen')">🗂️ Dokumen</button>
+        <button id="arsip-tab-nota" style="flex:1;padding:10px 4px;border:none;background:white;color:#4527A0;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer" onclick="switchArsipTab('nota')">🧾 Nota</button>
+        <button id="arsip-tab-notulen" style="flex:1;padding:10px 4px;border:none;background:white;color:#4527A0;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer" onclick="switchArsipTab('notulen')">📝 Notulen</button>
+      </div>
+      <div id="arsip-dokumen" style="padding:12px 16px">
+        <div id="list-arsip-dokumen"><div class="empty-state"><div class="empty-state-icon">🗂️</div>Belum ada dokumen arsip</div></div>
+      </div>
+      <div id="arsip-nota" style="display:none;padding:12px 16px">
+        <div id="list-arsip-nota"><div class="empty-state"><div class="empty-state-icon">🧾</div>Belum ada nota/bukti transaksi</div></div>
+      </div>
+      <div id="arsip-notulen" style="display:none;padding:12px 16px">
+        <div id="list-arsip-notulen"><div class="empty-state"><div class="empty-state-icon">📝</div>Belum ada notulen kegiatan</div></div>
+      </div>
+    </div>
+
   </div><!-- end app-content -->
 
   <div class="bottom-nav">
     <button class="nav-item" onclick="goPage('profil')"><span class="nav-icon">🪪</span>Profil</button>
-    <button class="nav-item" onclick="goPage('pengumuman')"><span class="nav-icon">📋</span>Pengumuman</button>
+    <button class="nav-item" onclick="goPage('pengumuman')"><span class="nav-icon">📋</span>Info</button>
     <button class="nav-item" onclick="goPage('keuangan')"><span class="nav-icon">💰</span>Keuangan</button>
     <button class="nav-item" onclick="goPage('galeri')"><span class="nav-icon">📸</span>Galeri</button>
+    <button class="nav-item" onclick="goPage('arsip')"><span class="nav-icon">🗄️</span>Arsip</button>
   </div>
 </div><!-- end screen-app -->
 
@@ -601,6 +625,7 @@ textarea.input-field{resize:none;min-height:90px}
       <button class="admin-tab-btn" id="admtab-aspirasi" onclick="switchAdminTab('aspirasi')">📢</button>
       <button class="admin-tab-btn" id="admtab-keuangan" onclick="switchAdminTab('keuangan')">💰</button>
       <button class="admin-tab-btn" id="admtab-galeri" onclick="switchAdminTab('galeri')">📸</button>
+      <button class="admin-tab-btn" id="admtab-arsip" onclick="switchAdminTab('arsip')">🗄️</button>
     </div>
     <!-- Label tab -->
     <div style="display:flex;gap:0;margin:0 16px 0;text-align:center">
@@ -686,6 +711,30 @@ textarea.input-field{resize:none;min-height:90px}
       <div class="card">
         <div class="card-title">📸 Koleksi Galeri</div>
         <div id="adm-list-galeri"><div class="empty-state"><div class="empty-state-icon">📸</div>Belum ada item galeri</div></div>
+      </div>
+    </div>
+
+    <!-- Tab: Arsip Digital RT (Admin) -->
+    <div id="admpage-arsip" style="display:none">
+      <div style="display:flex;gap:0;margin:12px 16px 0;border:2px solid #4527A0;border-radius:8px;overflow:hidden">
+        <button id="adm-arsip-tab-dokumen" style="flex:1;padding:9px 4px;border:none;background:#4527A0;color:white;font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;cursor:pointer" onclick="switchAdmArsipTab('dokumen')">🗂️ Dokumen</button>
+        <button id="adm-arsip-tab-nota" style="flex:1;padding:9px 4px;border:none;background:white;color:#4527A0;font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;cursor:pointer" onclick="switchAdmArsipTab('nota')">🧾 Nota</button>
+        <button id="adm-arsip-tab-notulen" style="flex:1;padding:9px 4px;border:none;background:white;color:#4527A0;font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;cursor:pointer" onclick="switchAdmArsipTab('notulen')">📝 Notulen</button>
+      </div>
+      <!-- Dokumen -->
+      <div id="adm-arsip-dokumen">
+        <div style="padding:12px 16px 8px"><button class="btn-submit" style="margin:0" onclick="openModal('modal-adm-arsip-dok')">+ Upload Dokumen</button></div>
+        <div class="card"><div class="card-title">🗂️ Daftar Dokumen</div><div id="adm-list-arsip-dokumen"><div class="empty-state"><div class="empty-state-icon">🗂️</div>Belum ada dokumen</div></div></div>
+      </div>
+      <!-- Nota -->
+      <div id="adm-arsip-nota" style="display:none">
+        <div style="padding:12px 16px 8px"><button class="btn-submit" style="margin:0" onclick="openModal('modal-adm-arsip-nota')">+ Upload Nota/Bukti</button></div>
+        <div class="card"><div class="card-title">🧾 Nota & Bukti Transaksi</div><div id="adm-list-arsip-nota"><div class="empty-state"><div class="empty-state-icon">🧾</div>Belum ada nota</div></div></div>
+      </div>
+      <!-- Notulen -->
+      <div id="adm-arsip-notulen" style="display:none">
+        <div style="padding:12px 16px 8px"><button class="btn-submit" style="margin:0" onclick="openModal('modal-adm-notulen')">+ Buat Notulen</button></div>
+        <div class="card"><div class="card-title">📝 Notulen Kegiatan RT</div><div id="adm-list-arsip-notulen"><div class="empty-state"><div class="empty-state-icon">📝</div>Belum ada notulen</div></div></div>
       </div>
     </div>
 
@@ -978,6 +1027,110 @@ textarea.input-field{resize:none;min-height:90px}
     </div>
     <button class="btn-submit" onclick="simpanAnggota()">💾 Simpan Anggota</button>
     <button class="btn-submit-sec" onclick="closeModal('modal-tambah-anggota')">Batal</button>
+  </div>
+</div>
+
+<!-- ADMIN: Upload Dokumen Arsip -->
+<div class="modal-overlay" id="modal-adm-arsip-dok" onclick="closeModalOutside(event,'modal-adm-arsip-dok')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <button onclick="closeModal('modal-adm-arsip-dok')" style="background:var(--gray-100);border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0">←</button>
+      <div class="modal-title" style="margin:0">🗂️ Upload Dokumen Arsip</div>
+    </div>
+    <div class="input-group"><label class="input-label">Judul Dokumen *</label><input type="text" class="input-field" id="dok-judul" placeholder="Contoh: SK Ketua RT 2025"></div>
+    <div class="input-group"><label class="input-label">Kategori</label>
+      <select class="input-field" id="dok-kategori">
+        <option value="Surat Keputusan">📄 Surat Keputusan</option>
+        <option value="Laporan Keuangan">💰 Laporan Keuangan</option>
+        <option value="Data Kependudukan">👥 Data Kependudukan</option>
+        <option value="Surat Menyurat">✉️ Surat Menyurat</option>
+        <option value="Lainnya">📁 Lainnya</option>
+      </select>
+    </div>
+    <div class="input-group"><label class="input-label">Tanggal Dokumen</label><input type="date" class="input-field" id="dok-tanggal"></div>
+    <div class="input-group"><label class="input-label">Keterangan</label><textarea class="input-field" id="dok-keterangan" placeholder="Deskripsi singkat dokumen..."></textarea></div>
+    <div class="input-group"><label class="input-label">Link Dokumen * (Google Drive / Dropbox)</label><input type="url" class="input-field" id="dok-url" placeholder="https://drive.google.com/..."></div>
+    <button class="btn-submit" onclick="adminUploadDokumen()">💾 Simpan Dokumen</button>
+    <button class="btn-submit-sec" onclick="closeModal('modal-adm-arsip-dok')">← Kembali</button>
+  </div>
+</div>
+
+<!-- ADMIN: Upload Nota/Bukti -->
+<div class="modal-overlay" id="modal-adm-arsip-nota" onclick="closeModalOutside(event,'modal-adm-arsip-nota')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <button onclick="closeModal('modal-adm-arsip-nota')" style="background:var(--gray-100);border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0">←</button>
+      <div class="modal-title" style="margin:0">🧾 Upload Nota/Bukti</div>
+    </div>
+    <div class="input-group"><label class="input-label">Judul Nota *</label><input type="text" class="input-field" id="nota-judul" placeholder="Contoh: Nota Beli Cat Pagar"></div>
+    <div class="input-group"><label class="input-label">Tanggal *</label><input type="date" class="input-field" id="nota-tanggal"></div>
+    <div class="input-group"><label class="input-label">Jumlah (Rp) *</label><input type="number" class="input-field" id="nota-jumlah" placeholder="50000" inputmode="numeric"></div>
+    <div class="input-group"><label class="input-label">Jenis</label>
+      <select class="input-field" id="nota-jenis">
+        <option value="Pengeluaran">⬇️ Pengeluaran</option>
+        <option value="Pemasukan">⬆️ Pemasukan</option>
+      </select>
+    </div>
+    <div class="input-group"><label class="input-label">Keterangan</label><textarea class="input-field" id="nota-keterangan" placeholder="Keterangan tambahan..."></textarea></div>
+    <div class="input-group"><label class="input-label">Foto Nota (langsung dari kamera)</label>
+      <div id="nota-foto-preview" style="width:100%;height:130px;background:var(--gray-100);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:28px;cursor:pointer;overflow:hidden" onclick="document.getElementById('nota-foto-input').click()">
+        📷<span style="font-size:12px;color:var(--gray-400);margin-top:4px">Ketuk untuk foto nota</span>
+      </div>
+      <input type="file" id="nota-foto-input" accept="image/*" capture="environment" style="display:none" onchange="previewNotaFoto(event)">
+    </div>
+    <input type="hidden" id="nota-foto-base64">
+    <button class="btn-submit" onclick="adminUploadNota()">💾 Simpan Nota</button>
+    <button class="btn-submit-sec" onclick="closeModal('modal-adm-arsip-nota')">← Kembali</button>
+  </div>
+</div>
+
+<!-- ADMIN: Buat Notulen Kegiatan -->
+<div class="modal-overlay" id="modal-adm-notulen" onclick="closeModalOutside(event,'modal-adm-notulen')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <button onclick="closeModal('modal-adm-notulen')" style="background:var(--gray-100);border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0">←</button>
+      <div class="modal-title" style="margin:0">📝 Notulen Kegiatan RT</div>
+    </div>
+    <div class="input-group"><label class="input-label">Judul Rapat/Kegiatan *</label><input type="text" class="input-field" id="notul-judul" placeholder="Contoh: Rapat Bulanan RT Juni 2025"></div>
+    <div class="input-group"><label class="input-label">Tanggal & Waktu *</label><input type="datetime-local" class="input-field" id="notul-waktu"></div>
+    <div class="input-group"><label class="input-label">Tempat *</label><input type="text" class="input-field" id="notul-tempat" placeholder="Contoh: Balai Warga RT 02"></div>
+    <div class="input-group"><label class="input-label">Peserta</label>
+      <select class="input-field" id="notul-peserta-tipe" onchange="togglePesertaTipe()">
+        <option value="semua">Semua Warga RT 02</option>
+        <option value="khusus">Peserta Tertentu (isi manual)</option>
+      </select>
+    </div>
+    <div id="group-peserta-khusus" style="display:none;margin-bottom:12px">
+      <div style="display:grid;grid-template-columns:30px 1fr 1fr;gap:6px;font-size:11px;font-weight:800;color:var(--gray-600);margin-bottom:6px">
+        <span>No</span><span>Nama</span><span>Keterangan</span>
+      </div>
+      <div id="peserta-rows">
+        <div class="peserta-row" style="display:grid;grid-template-columns:30px 1fr 1fr;gap:6px;margin-bottom:6px">
+          <input type="text" class="input-field" placeholder="1" style="padding:8px;font-size:12px;text-align:center">
+          <input type="text" class="input-field" placeholder="Nama" style="padding:8px;font-size:12px">
+          <input type="text" class="input-field" placeholder="Hadir/Tidak" style="padding:8px;font-size:12px">
+        </div>
+      </div>
+      <button onclick="tambahBarisPeserta()" style="width:100%;background:var(--gray-100);border:1px dashed var(--gray-400);border-radius:8px;padding:8px;font-size:12px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif">+ Tambah Baris</button>
+    </div>
+    <div class="input-group"><label class="input-label">Agenda/Pembahasan *</label><textarea class="input-field" id="notul-agenda" placeholder="1. Pembahasan iuran bulanan&#10;2. Rencana kerja bakti&#10;..." style="min-height:90px"></textarea></div>
+    <div class="input-group"><label class="input-label">Keputusan & Tindak Lanjut *</label><textarea class="input-field" id="notul-keputusan" placeholder="1. Iuran tetap Rp 25.000/bulan&#10;2. Kerja bakti minggu pertama&#10;..." style="min-height:90px"></textarea></div>
+    <div class="input-group"><label class="input-label">Foto Dokumentasi</label>
+      <div id="notul-foto-preview" style="width:100%;height:120px;background:var(--gray-100);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:28px;cursor:pointer;overflow:hidden" onclick="document.getElementById('notul-foto-input').click()">
+        📸<span style="font-size:12px;color:var(--gray-400);margin-top:4px">Ketuk untuk foto rapat</span>
+      </div>
+      <input type="file" id="notul-foto-input" accept="image/*" capture="environment" style="display:none" onchange="previewNotulenFoto(event)">
+    </div>
+    <input type="hidden" id="notul-foto-base64">
+    <div class="input-group"><label class="input-label">Link Video Dokumentasi (opsional)</label><input type="url" class="input-field" id="notul-video-url" placeholder="https://youtube.com/..."></div>
+    <div style="background:#E8F5E9;border-radius:8px;padding:10px;margin-bottom:12px;font-size:11px;color:#2E7D32;font-weight:700">
+      ✅ Setelah disimpan, notulen otomatis tampil di halaman Arsip warga
+    </div>
+    <button class="btn-submit" onclick="adminSimpanNotulen()">📤 Terbitkan Notulen</button>
+    <button class="btn-submit-sec" onclick="closeModal('modal-adm-notulen')">← Kembali</button>
   </div>
 </div>
 
@@ -1601,6 +1754,14 @@ function attachListeners() {
     });
   unsubList.push(u5);
 
+  // Arsip Digital RT (warga: read-only)
+  var u6 = db.collection('arsip').orderBy('createdAt','desc').limit(100)
+    .onSnapshot(function(snap) {
+      var data = snap.docs.map(function(d) { return Object.assign({id:d.id}, d.data()); });
+      renderArsipWarga(data);
+    });
+  unsubList.push(u6);
+
   // Jumlah warga
   db.collection('warga').get().then(function(snap) {
     document.getElementById('stat-warga').textContent = snap.size;
@@ -1702,6 +1863,14 @@ function attachAdminListeners() {
       }));
     });
   unsubList.push(a5);
+
+  // Listener: Arsip Digital RT (admin)
+  var a6 = db.collection('arsip').orderBy('createdAt','desc').limit(200)
+    .onSnapshot(function(snap) {
+      var data = snap.docs.map(function(d) { return Object.assign({id:d.id}, d.data()); });
+      renderArsipAdmin(data);
+    });
+  unsubList.push(a6);
 }
 
 // Hitung total jiwa (KK + anggota) dan update semua angka
@@ -2088,7 +2257,7 @@ function goPage(page) {
   var t = document.getElementById('page-' + page);
   if (t) { t.style.display = 'block'; t.classList.add('active'); }
   currentPage = page;
-  var nm = {profil:0, pengumuman:1, keuangan:2, galeri:3};
+  var nm = {profil:0, pengumuman:1, keuangan:2, galeri:3, arsip:4};
   var ni = document.querySelectorAll('.nav-item');
   for (var j = 0; j < ni.length; j++) ni[j].classList.remove('active');
   if (nm[page] !== undefined && ni[nm[page]]) ni[nm[page]].classList.add('active');
@@ -2129,13 +2298,259 @@ function switchGaleri(type) {
 }
 
 function switchAdminTab(tab) {
-  ['pengumuman','warga','aspirasi','keuangan','galeri'].forEach(function(t) {
+  ['pengumuman','warga','aspirasi','keuangan','galeri','arsip'].forEach(function(t) {
     var page = document.getElementById('admpage-' + t);
     if (page) page.style.display = t === tab ? 'block' : 'none';
     var btn = document.getElementById('admtab-' + t);
     if (btn) btn.classList.toggle('active', t === tab);
   });
   admCurrentTab = tab;
+}
+
+// ══ ARSIP DIGITAL RT ══
+
+function switchArsipTab(tab) {
+  ['dokumen','nota','notulen'].forEach(function(t) {
+    var el  = document.getElementById('arsip-' + t);
+    var btn = document.getElementById('arsip-tab-' + t);
+    if (el)  el.style.display  = t === tab ? 'block' : 'none';
+    if (btn) { btn.style.background = t === tab ? '#4527A0' : 'white'; btn.style.color = t === tab ? 'white' : '#4527A0'; }
+  });
+}
+
+function switchAdmArsipTab(tab) {
+  ['dokumen','nota','notulen'].forEach(function(t) {
+    var el  = document.getElementById('adm-arsip-' + t);
+    var btn = document.getElementById('adm-arsip-tab-' + t);
+    if (el)  el.style.display  = t === tab ? 'block' : 'none';
+    if (btn) { btn.style.background = t === tab ? '#4527A0' : 'white'; btn.style.color = t === tab ? 'white' : '#4527A0'; }
+  });
+}
+
+function togglePesertaTipe() {
+  var v = document.getElementById('notul-peserta-tipe').value;
+  document.getElementById('group-peserta-khusus').style.display = v === 'khusus' ? 'block' : 'none';
+}
+
+function tambahBarisPeserta() {
+  var rows = document.getElementById('peserta-rows');
+  var n = rows.querySelectorAll('.peserta-row').length + 1;
+  var row = document.createElement('div');
+  row.className = 'peserta-row';
+  row.style.cssText = 'display:grid;grid-template-columns:30px 1fr 1fr;gap:6px;margin-bottom:6px';
+  row.innerHTML = '<input type="text" class="input-field" placeholder="' + n + '" style="padding:8px;font-size:12px;text-align:center">'
+    + '<input type="text" class="input-field" placeholder="Nama" style="padding:8px;font-size:12px">'
+    + '<input type="text" class="input-field" placeholder="Hadir/Tidak" style="padding:8px;font-size:12px">';
+  rows.appendChild(row);
+}
+
+function prosesGambarArsip(event, previewId, hiddenId) {
+  var file = event.target.files && event.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = new Image();
+    img.onload = function() {
+      var canvas = document.createElement('canvas');
+      var MAX = 800; var w = img.width, h = img.height;
+      if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      var data = canvas.toDataURL('image/jpeg', 0.8);
+      document.getElementById(hiddenId).value = data;
+      var prev = document.getElementById(previewId);
+      prev.innerHTML = '<img src="' + data + '" style="width:100%;height:100%;object-fit:cover">';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function previewNotaFoto(event)   { prosesGambarArsip(event, 'nota-foto-preview',  'nota-foto-base64'); }
+function previewNotulenFoto(event){ prosesGambarArsip(event, 'notul-foto-preview', 'notul-foto-base64'); }
+
+// Admin: Simpan Dokumen
+function adminUploadDokumen() {
+  if (!FIREBASE_READY) { showToast('⚠️ Firebase belum dikonfigurasi'); return; }
+  var judul = document.getElementById('dok-judul').value.trim();
+  var kat   = document.getElementById('dok-kategori').value;
+  var tgl   = document.getElementById('dok-tanggal').value;
+  var ket   = document.getElementById('dok-keterangan').value.trim();
+  var url   = document.getElementById('dok-url').value.trim();
+  if (!judul || !url) { showToast('⚠️ Judul dan link dokumen wajib diisi'); return; }
+  showLoading(true);
+  db.collection('arsip').add({
+    tipe:'dokumen', judul:judul, kategori:kat, tanggal:tgl, keterangan:ket, url:url,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(function() {
+    showLoading(false);
+    closeModal('modal-adm-arsip-dok');
+    ['dok-judul','dok-url','dok-keterangan'].forEach(function(id){ document.getElementById(id).value=''; });
+    showToast('✅ Dokumen berhasil disimpan! Langsung tampil di halaman warga.');
+  }).catch(function(e){ showLoading(false); showToast('❌ ' + e.message); });
+}
+
+// Admin: Simpan Nota
+function adminUploadNota() {
+  if (!FIREBASE_READY) { showToast('⚠️ Firebase belum dikonfigurasi'); return; }
+  var judul  = document.getElementById('nota-judul').value.trim();
+  var tgl    = document.getElementById('nota-tanggal').value;
+  var jumlah = parseInt(document.getElementById('nota-jumlah').value) || 0;
+  var jenis  = document.getElementById('nota-jenis').value;
+  var ket    = document.getElementById('nota-keterangan').value.trim();
+  var foto   = document.getElementById('nota-foto-base64').value;
+  if (!judul || !tgl) { showToast('⚠️ Judul dan tanggal wajib diisi'); return; }
+  showLoading(true);
+  db.collection('arsip').add({
+    tipe:'nota', judul:judul, tanggal:tgl, jumlah:jumlah, jenis:jenis, keterangan:ket, foto:foto,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(function() {
+    showLoading(false);
+    closeModal('modal-adm-arsip-nota');
+    ['nota-judul','nota-jumlah','nota-keterangan','nota-foto-base64'].forEach(function(id){ document.getElementById(id).value=''; });
+    document.getElementById('nota-foto-preview').innerHTML = '📷<span style="font-size:12px;color:var(--gray-400);margin-top:4px">Ketuk untuk foto nota</span>';
+    showToast('✅ Nota berhasil disimpan!');
+  }).catch(function(e){ showLoading(false); showToast('❌ ' + e.message); });
+}
+
+// Admin: Simpan Notulen
+function adminSimpanNotulen() {
+  if (!FIREBASE_READY) { showToast('⚠️ Firebase belum dikonfigurasi'); return; }
+  var judul    = document.getElementById('notul-judul').value.trim();
+  var waktu    = document.getElementById('notul-waktu').value;
+  var tempat   = document.getElementById('notul-tempat').value.trim();
+  var pTipe    = document.getElementById('notul-peserta-tipe').value;
+  var agenda   = document.getElementById('notul-agenda').value.trim();
+  var keputusan= document.getElementById('notul-keputusan').value.trim();
+  var foto     = document.getElementById('notul-foto-base64').value;
+  var videoUrl = document.getElementById('notul-video-url').value.trim();
+  if (!judul || !waktu || !agenda || !keputusan) { showToast('⚠️ Judul, waktu, agenda & keputusan wajib diisi'); return; }
+  var peserta = pTipe;
+  if (pTipe === 'khusus') {
+    var list = [];
+    document.querySelectorAll('#peserta-rows .peserta-row').forEach(function(row) {
+      var inp = row.querySelectorAll('input');
+      if (inp[1] && inp[1].value.trim()) list.push({ no:inp[0].value.trim(), nama:inp[1].value.trim(), ket: inp[2] ? inp[2].value.trim() : '' });
+    });
+    peserta = JSON.stringify(list);
+  }
+  showLoading(true);
+  db.collection('arsip').add({
+    tipe:'notulen', judul:judul, waktu:waktu, tempat:tempat,
+    pesertaTipe:pTipe, peserta:peserta,
+    agenda:agenda, keputusan:keputusan, foto:foto, videoUrl:videoUrl,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(function() {
+    showLoading(false);
+    closeModal('modal-adm-notulen');
+    ['notul-judul','notul-agenda','notul-keputusan','notul-foto-base64','notul-video-url'].forEach(function(id){ document.getElementById(id).value=''; });
+    document.getElementById('notul-foto-preview').innerHTML = '📸<span style="font-size:12px;color:var(--gray-400);margin-top:4px">Ketuk untuk foto rapat</span>';
+    showToast('✅ Notulen berhasil diterbitkan! Langsung tampil di halaman warga.');
+  }).catch(function(e){ showLoading(false); showToast('❌ ' + e.message); });
+}
+
+// Hapus arsip (admin)
+function hapusArsip(id) {
+  if (!confirm('Hapus arsip ini? Tidak bisa dibatalkan.')) return;
+  db.collection('arsip').doc(id).delete()
+    .then(function() { showToast('🗑️ Arsip berhasil dihapus'); })
+    .catch(function(e) { showToast('❌ ' + e.message); });
+}
+
+// Render arsip di halaman WARGA
+function renderArsipWarga(list) {
+  var dok     = list.filter(function(i){ return i.tipe==='dokumen'; });
+  var nota    = list.filter(function(i){ return i.tipe==='nota'; });
+  var notulen = list.filter(function(i){ return i.tipe==='notulen'; });
+
+  // Dokumen
+  var elDok = document.getElementById('list-arsip-dokumen');
+  if (elDok) elDok.innerHTML = dok.length ? dok.map(function(d) {
+    var icon = d.kategori==='Laporan Keuangan'?'💰':d.kategori==='Surat Keputusan'?'📄':'🗂️';
+    return '<div class="dokumen-item">'
+      + '<div class="doc-icon">' + icon + '</div>'
+      + '<div style="flex:1"><div class="doc-name">' + escHtml(d.judul) + '</div>'
+      + '<div class="doc-date">' + escHtml(d.kategori||'') + (d.tanggal ? ' · ' + d.tanggal : '') + '</div>'
+      + (d.keterangan ? '<div style="font-size:11px;color:var(--gray-400)">' + escHtml(d.keterangan) + '</div>' : '')
+      + '</div>'
+      + '<button onclick="window.open(\'' + escHtml(d.url) + '\',\'_blank\')" style="border:none;background:var(--blue-light);color:var(--blue);border-radius:6px;padding:6px 10px;font-size:12px;font-weight:800;cursor:pointer">⬇️</button>'
+      + '</div>';
+  }).join('') : '<div class="empty-state"><div class="empty-state-icon">🗂️</div>Belum ada dokumen arsip</div>';
+
+  // Nota
+  var elNota = document.getElementById('list-arsip-nota');
+  if (elNota) elNota.innerHTML = nota.length ? nota.map(function(n) {
+    var masuk = n.jenis === 'Pemasukan';
+    return '<div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--gray-100)">'
+      + (n.foto ? '<img src="' + n.foto + '" style="width:58px;height:58px;border-radius:8px;object-fit:cover;flex-shrink:0">'
+                : '<div style="width:58px;height:58px;background:var(--gray-100);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">🧾</div>')
+      + '<div style="flex:1"><div style="font-size:13px;font-weight:800;color:var(--gray-800)">' + escHtml(n.judul) + '</div>'
+      + '<div style="font-size:11px;color:var(--gray-400)">' + (n.tanggal||'') + (n.keterangan ? ' · ' + escHtml(n.keterangan) : '') + '</div></div>'
+      + '<div style="font-size:14px;font-weight:900;color:' + (masuk?'var(--green)':'var(--red)') + ';white-space:nowrap">'
+      + (masuk?'+':'−') + 'Rp ' + (n.jumlah||0).toLocaleString('id-ID') + '</div></div>';
+  }).join('') : '<div class="empty-state"><div class="empty-state-icon">🧾</div>Belum ada nota/bukti transaksi</div>';
+
+  // Notulen
+  var elNot = document.getElementById('list-arsip-notulen');
+  if (elNot) elNot.innerHTML = notulen.length ? notulen.map(function(n) {
+    var pesertaStr = n.pesertaTipe === 'semua' ? 'Semua Warga RT 02' : renderPesertaMini(n.peserta);
+    return '<div style="background:var(--gray-50);border-radius:10px;padding:14px;margin-bottom:10px;border:1px solid var(--gray-200)">'
+      + '<div style="font-size:14px;font-weight:900;color:#4527A0;margin-bottom:10px">📝 ' + escHtml(n.judul) + '</div>'
+      + '<table style="width:100%;font-size:12px;border-collapse:collapse">'
+      + '<tr><td style="font-weight:800;color:var(--gray-600);padding:4px 6px 4px 0;width:100px;vertical-align:top">📅 Waktu</td><td style="color:var(--gray-800);padding:4px 0">' + escHtml((n.waktu||'').replace('T',' ')) + '</td></tr>'
+      + '<tr><td style="font-weight:800;color:var(--gray-600);padding:4px 6px 4px 0;vertical-align:top">📍 Tempat</td><td style="color:var(--gray-800);padding:4px 0">' + escHtml(n.tempat||'—') + '</td></tr>'
+      + '<tr><td style="font-weight:800;color:var(--gray-600);padding:4px 6px 4px 0;vertical-align:top">👥 Peserta</td><td style="color:var(--gray-800);padding:4px 0">' + escHtml(pesertaStr) + '</td></tr>'
+      + '<tr><td style="font-weight:800;color:var(--gray-600);padding:4px 6px 4px 0;vertical-align:top">📋 Agenda</td><td style="color:var(--gray-800);padding:4px 0;white-space:pre-line">' + escHtml(n.agenda||'—') + '</td></tr>'
+      + '<tr><td style="font-weight:800;color:var(--gray-600);padding:4px 6px 4px 0;vertical-align:top">✅ Keputusan</td><td style="color:var(--gray-800);padding:4px 0;white-space:pre-line">' + escHtml(n.keputusan||'—') + '</td></tr>'
+      + '</table>'
+      + (n.foto ? '<img src="' + n.foto + '" style="width:100%;border-radius:8px;margin-top:10px;object-fit:cover;max-height:180px">' : '')
+      + (n.videoUrl ? '<a href="' + escHtml(n.videoUrl) + '" target="_blank" style="display:block;margin-top:8px;font-size:12px;font-weight:800;color:var(--blue)">🎬 Lihat Video Dokumentasi</a>' : '')
+      + '</div>';
+  }).join('') : '<div class="empty-state"><div class="empty-state-icon">📝</div>Belum ada notulen kegiatan</div>';
+}
+
+function renderPesertaMini(str) {
+  try {
+    var list = JSON.parse(str);
+    return list.slice(0,3).map(function(p){ return p.nama; }).join(', ') + (list.length>3?' +' + (list.length-3) + ' lainnya':'');
+  } catch(e) { return str||'—'; }
+}
+
+// Render arsip di halaman ADMIN
+function renderArsipAdmin(list) {
+  var dok     = list.filter(function(i){ return i.tipe==='dokumen'; });
+  var nota    = list.filter(function(i){ return i.tipe==='nota'; });
+  var notulen = list.filter(function(i){ return i.tipe==='notulen'; });
+
+  var elDok = document.getElementById('adm-list-arsip-dokumen');
+  if (elDok) elDok.innerHTML = dok.length ? dok.map(function(d) {
+    return '<div class="dokumen-item"><div class="doc-icon">🗂️</div>'
+      + '<div style="flex:1"><div class="doc-name">' + escHtml(d.judul) + '</div>'
+      + '<div class="doc-date">' + escHtml(d.kategori||'') + (d.tanggal?' · '+d.tanggal:'') + '</div></div>'
+      + '<button onclick="hapusArsip(\'' + d.id + '\')" style="border:none;background:#FFEBEE;color:var(--red);border-radius:6px;padding:6px 10px;font-size:11px;font-weight:800;cursor:pointer">🗑️</button>'
+      + '</div>';
+  }).join('') : '<div class="empty-state"><div class="empty-state-icon">🗂️</div>Belum ada dokumen</div>';
+
+  var elNota = document.getElementById('adm-list-arsip-nota');
+  if (elNota) elNota.innerHTML = nota.length ? nota.map(function(n) {
+    return '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--gray-100)">'
+      + (n.foto?'<img src="'+n.foto+'" style="width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0">'
+              :'<div style="width:44px;height:44px;background:var(--gray-100);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🧾</div>')
+      + '<div style="flex:1"><div style="font-size:13px;font-weight:800">' + escHtml(n.judul) + '</div>'
+      + '<div style="font-size:11px;color:var(--gray-400)">' + (n.tanggal||'') + ' · Rp ' + (n.jumlah||0).toLocaleString('id-ID') + '</div></div>'
+      + '<button onclick="hapusArsip(\'' + n.id + '\')" style="border:none;background:#FFEBEE;color:var(--red);border-radius:6px;padding:6px 10px;font-size:11px;font-weight:800;cursor:pointer">🗑️</button>'
+      + '</div>';
+  }).join('') : '<div class="empty-state"><div class="empty-state-icon">🧾</div>Belum ada nota</div>';
+
+  var elNot = document.getElementById('adm-list-arsip-notulen');
+  if (elNot) elNot.innerHTML = notulen.length ? notulen.map(function(n) {
+    return '<div style="padding:12px 0;border-bottom:1px solid var(--gray-100)">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start">'
+      + '<div><div style="font-size:13px;font-weight:800;color:#4527A0">📝 ' + escHtml(n.judul) + '</div>'
+      + '<div style="font-size:11px;color:var(--gray-400)">' + escHtml((n.waktu||'').replace('T',' ')) + ' · ' + escHtml(n.tempat||'') + '</div></div>'
+      + '<button onclick="hapusArsip(\'' + n.id + '\')" style="border:none;background:#FFEBEE;color:var(--red);border-radius:6px;padding:6px 10px;font-size:11px;font-weight:800;cursor:pointer;flex-shrink:0">🗑️</button>'
+      + '</div></div>';
+  }).join('') : '<div class="empty-state"><div class="empty-state-icon">📝</div>Belum ada notulen</div>';
 }
 
 // ══ FOTO PROFIL ══
