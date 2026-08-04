@@ -366,6 +366,7 @@ textarea.input-field{resize:none;min-height:90px}
           <button class="menu-item" onclick="openPengumuman('pengumuman')"><span class="menu-icon">📋</span><span class="menu-label">Pengumuman</span></button>
           <button class="menu-item" onclick="openPengumuman('aspirasi')"><span class="menu-icon">📢</span><span class="menu-label">Aspirasi</span></button>
           <button class="menu-item" onclick="goPage('keuangan')"><span class="menu-icon">💰</span><span class="menu-label">Keuangan</span></button>
+          <button class="menu-item" onclick="goPage('surat')"><span class="menu-icon">📄</span><span class="menu-label">Surat Digital</span></button>
           <button class="menu-item" onclick="goPage('galeri')"><span class="menu-icon">📸</span><span class="menu-label">Galeri</span></button>
           <button class="menu-item" onclick="goPage('arsip')"><span class="menu-icon">🗄️</span><span class="menu-label">Arsip RT</span></button>
           <button class="menu-item" onclick="showToast('📞 Ketua RT: 0812-xxxx-xxxx')"><span class="menu-icon">📞</span><span class="menu-label">Kontak RT</span></button>
@@ -569,13 +570,70 @@ textarea.input-field{resize:none;min-height:90px}
       </div>
     </div>
 
+    <!-- ── SURAT DIGITAL ── -->
+    <div id="page-surat" class="page">
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px 0">
+        <button onclick="goPage('beranda')" style="background:var(--gray-100);border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0">←</button>
+        <span style="font-size:15px;font-weight:900;color:var(--gray-800)">Surat Digital RT</span>
+      </div>
+      <div style="background:#E8F5E9;border-left:4px solid #2E7D32;padding:10px 14px;margin:10px 16px 0;border-radius:0 8px 8px 0;font-size:11px;color:#2E7D32;font-weight:700;line-height:1.6">
+        📄 Ajukan surat keterangan RT secara digital — tanpa antre, langsung dari HP. Admin RT akan memproses permohonan kamu.
+      </div>
+
+      <!-- Pilih jenis surat -->
+      <div class="card" style="margin-top:14px">
+        <div class="card-title">📋 Pilih Jenis Surat</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <button onclick="ajukanSurat('Surat Keterangan Domisili')" style="background:#F3E5F5;border:none;border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;font-family:'Nunito',sans-serif">
+            <div style="font-size:24px">🏠</div>
+            <div style="font-size:11px;font-weight:800;color:#4527A0;margin-top:4px">Keterangan Domisili</div>
+          </button>
+          <button onclick="ajukanSurat('Surat Keterangan Tidak Mampu')" style="background:#FFF3E0;border:none;border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;font-family:'Nunito',sans-serif">
+            <div style="font-size:24px">📜</div>
+            <div style="font-size:11px;font-weight:800;color:#E65100;margin-top:4px">Keterangan Tidak Mampu</div>
+          </button>
+          <button onclick="ajukanSurat('Surat Keterangan Usaha')" style="background:#E3F2FD;border:none;border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;font-family:'Nunito',sans-serif">
+            <div style="font-size:24px">💼</div>
+            <div style="font-size:11px;font-weight:800;color:#1565C0;margin-top:4px">Keterangan Usaha</div>
+          </button>
+          <button onclick="ajukanSurat('Surat Pengantar KTP/KK')" style="background:#E8F5E9;border:none;border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;font-family:'Nunito',sans-serif">
+            <div style="font-size:24px">🪪</div>
+            <div style="font-size:11px;font-weight:800;color:#2E7D32;margin-top:4px">Pengantar KTP / KK</div>
+          </button>
+          <button onclick="ajukanSurat('Surat Keterangan Kelahiran')" style="background:#FCE4EC;border:none;border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;font-family:'Nunito',sans-serif">
+            <div style="font-size:24px">👶</div>
+            <div style="font-size:11px;font-weight:800;color:#C62828;margin-top:4px">Keterangan Kelahiran</div>
+          </button>
+          <button onclick="ajukanSurat('Surat Keterangan Kematian')" style="background:#F5F5F5;border:none;border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;font-family:'Nunito',sans-serif">
+            <div style="font-size:24px">🕊️</div>
+            <div style="font-size:11px;font-weight:800;color:#424242;margin-top:4px">Keterangan Kematian</div>
+          </button>
+          <button onclick="ajukanSurat('Surat Keterangan Pindah')" style="background:#E8EAF6;border:none;border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;font-family:'Nunito',sans-serif">
+            <div style="font-size:24px">🚚</div>
+            <div style="font-size:11px;font-weight:800;color:#283593;margin-top:4px">Keterangan Pindah</div>
+          </button>
+          <button onclick="ajukanSurat('Surat Lainnya')" style="background:#FFF8E1;border:none;border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;font-family:'Nunito',sans-serif">
+            <div style="font-size:24px">✏️</div>
+            <div style="font-size:11px;font-weight:800;color:#F57F17;margin-top:4px">Surat Lainnya</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Riwayat permohonan surat -->
+      <div class="card">
+        <div class="card-title">📋 Riwayat Permohonan Surat</div>
+        <div style="font-size:11px;color:var(--gray-400);margin-bottom:10px">Status permohonan surat kamu akan tampil di sini.</div>
+        <div id="list-surat-warga"><div class="empty-state"><div class="empty-state-icon">📄</div>Belum ada permohonan surat</div></div>
+      </div>
+    </div>
+
   </div><!-- end app-content -->
 
   <div class="bottom-nav">
     <button class="nav-item" onclick="goPage('profil')"><span class="nav-icon">🪪</span>Profil</button>
     <button class="nav-item" onclick="goPage('pengumuman')"><span class="nav-icon">📋</span>Info</button>
+    <button class="nav-item" onclick="goPage('surat')"><span class="nav-icon">📄</span>Surat</button>
     <button class="nav-item" onclick="goPage('keuangan')"><span class="nav-icon">💰</span>Keuangan</button>
-    <button class="nav-item" onclick="goPage('galeri')"><span class="nav-icon">📸</span>Galeri</button>
     <button class="nav-item" onclick="goPage('arsip')"><span class="nav-icon">🗄️</span>Arsip</button>
   </div>
 </div><!-- end screen-app -->
@@ -626,6 +684,7 @@ textarea.input-field{resize:none;min-height:90px}
       <button class="admin-tab-btn" id="admtab-keuangan" onclick="switchAdminTab('keuangan')">💰</button>
       <button class="admin-tab-btn" id="admtab-galeri" onclick="switchAdminTab('galeri')">📸</button>
       <button class="admin-tab-btn" id="admtab-arsip" onclick="switchAdminTab('arsip')">🗄️</button>
+      <button class="admin-tab-btn" id="admtab-surat" onclick="switchAdminTab('surat')">📄</button>
     </div>
     <!-- Label tab -->
     <div style="display:flex;gap:0;margin:0 16px 0;text-align:center">
@@ -735,6 +794,15 @@ textarea.input-field{resize:none;min-height:90px}
       <div id="adm-arsip-notulen" style="display:none">
         <div style="padding:12px 16px 8px"><button class="btn-submit" style="margin:0" onclick="openModal('modal-adm-notulen')">+ Buat Notulen</button></div>
         <div class="card"><div class="card-title">📝 Notulen Kegiatan RT</div><div id="adm-list-arsip-notulen"><div class="empty-state"><div class="empty-state-icon">📝</div>Belum ada notulen</div></div></div>
+      </div>
+    </div>
+
+    <!-- Tab: Surat Digital (Admin) -->
+    <div id="admpage-surat" style="display:none">
+      <div class="card" style="margin-top:12px">
+        <div class="card-title">📄 Permohonan Surat Masuk</div>
+        <div style="font-size:11px;color:var(--gray-400);margin-bottom:10px">Ketuk permohonan untuk approve/tolak dan isi nomor surat.</div>
+        <div id="adm-list-surat"><div class="empty-state"><div class="empty-state-icon">📄</div>Belum ada permohonan surat</div></div>
       </div>
     </div>
 
@@ -1131,6 +1199,78 @@ textarea.input-field{resize:none;min-height:90px}
     </div>
     <button class="btn-submit" onclick="adminSimpanNotulen()">📤 Terbitkan Notulen</button>
     <button class="btn-submit-sec" onclick="closeModal('modal-adm-notulen')">← Kembali</button>
+  </div>
+</div>
+
+<!-- Modal: Ajukan Permohonan Surat -->
+<div class="modal-overlay" id="modal-ajukan-surat" onclick="closeModalOutside(event,'modal-ajukan-surat')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <button onclick="closeModal('modal-ajukan-surat')" style="background:var(--gray-100);border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0">←</button>
+      <div class="modal-title" style="margin:0" id="judul-modal-surat">📄 Permohonan Surat</div>
+    </div>
+    <input type="hidden" id="surat-jenis">
+    <div class="input-group"><label class="input-label">Jenis Surat</label>
+      <div id="surat-jenis-label" style="background:var(--gray-100);border-radius:8px;padding:12px;font-size:13px;font-weight:800;color:var(--gray-800)">—</div>
+    </div>
+    <div class="input-group"><label class="input-label">Nama Pemohon *</label>
+      <input type="text" class="input-field" id="surat-nama" placeholder="Nama lengkap sesuai KK">
+    </div>
+    <div class="input-group"><label class="input-label">NIK (opsional)</label>
+      <input type="text" class="input-field" id="surat-nik" placeholder="Nomor Induk Kependudukan" inputmode="numeric">
+    </div>
+    <div class="input-group"><label class="input-label">Alamat Lengkap *</label>
+      <input type="text" class="input-field" id="surat-alamat" placeholder="Alamat sesuai KK">
+    </div>
+    <div class="input-group"><label class="input-label">No. HP Aktif *</label>
+      <input type="tel" class="input-field" id="surat-hp" placeholder="08xx-xxxx-xxxx" inputmode="tel">
+    </div>
+    <div class="input-group"><label class="input-label">Keperluan / Keterangan *</label>
+      <textarea class="input-field" id="surat-keperluan" placeholder="Contoh: Untuk keperluan daftar sekolah anak, beasiswa, dll..." style="min-height:80px"></textarea>
+    </div>
+    <div id="group-surat-lainnya" style="display:none">
+      <div class="input-group"><label class="input-label">Judul Surat (karena memilih Surat Lainnya)</label>
+        <input type="text" class="input-field" id="surat-judul-lain" placeholder="Contoh: Surat Keterangan Belum Menikah">
+      </div>
+    </div>
+    <div style="background:#FFF8E1;border-radius:8px;padding:10px;margin-bottom:12px;font-size:11px;color:#F57F17;font-weight:700;line-height:1.5">
+      ⏱️ Permohonan akan diproses oleh pengurus RT dalam 1x24 jam. Pantau status di halaman Surat Digital.
+    </div>
+    <button class="btn-submit" onclick="kirimPermohonanSurat()">📤 Kirim Permohonan</button>
+    <button class="btn-submit-sec" onclick="closeModal('modal-ajukan-surat')">← Batal</button>
+  </div>
+</div>
+
+<!-- Modal: Admin Proses Surat -->
+<div class="modal-overlay" id="modal-proses-surat" onclick="closeModalOutside(event,'modal-proses-surat')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+      <button onclick="closeModal('modal-proses-surat')" style="background:var(--gray-100);border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0">←</button>
+      <div class="modal-title" style="margin:0">⚙️ Proses Permohonan Surat</div>
+    </div>
+    <input type="hidden" id="proses-surat-id">
+    <div class="input-group"><label class="input-label">Jenis Surat</label>
+      <div id="proses-surat-jenis" style="background:var(--gray-100);border-radius:8px;padding:12px;font-size:13px;font-weight:800;color:var(--gray-800)">—</div>
+    </div>
+    <div class="input-group"><label class="input-label">Pemohon</label>
+      <div id="proses-surat-nama" style="background:var(--gray-100);border-radius:8px;padding:12px;font-size:13px;font-weight:700;color:var(--gray-800)">—</div>
+    </div>
+    <div class="input-group"><label class="input-label">Keperluan</label>
+      <div id="proses-surat-keperluan" style="background:var(--gray-100);border-radius:8px;padding:12px;font-size:12px;color:var(--gray-600)">—</div>
+    </div>
+    <div class="input-group"><label class="input-label">Nomor Surat (isi saat approve)</label>
+      <input type="text" class="input-field" id="proses-nomor-surat" placeholder="Contoh: 470/RT02/VI/2025">
+    </div>
+    <div class="input-group"><label class="input-label">Catatan untuk Warga (opsional)</label>
+      <textarea class="input-field" id="proses-catatan" placeholder="Contoh: Silakan ambil surat di rumah Ketua RT pada jam 19.00..."></textarea>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button onclick="adminProsesSurat('approved')" style="flex:1;background:var(--green);color:white;border:none;border-radius:var(--radius);padding:14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer">✅ Approve</button>
+      <button onclick="adminProsesSurat('rejected')" style="flex:1;background:var(--red);color:white;border:none;border-radius:var(--radius);padding:14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer">❌ Tolak</button>
+    </div>
+    <button class="btn-submit-sec" style="margin-top:8px" onclick="closeModal('modal-proses-surat')">← Kembali</button>
   </div>
 </div>
 
@@ -1762,6 +1902,18 @@ function attachListeners() {
     });
   unsubList.push(u6);
 
+  // Surat Digital (warga: lihat permohonan sendiri)
+  if (currentUser) {
+    var u7 = db.collection('surat')
+      .where('uid','==',currentUser.uid)
+      .orderBy('createdAt','desc')
+      .onSnapshot(function(snap) {
+        var data = snap.docs.map(function(d) { return Object.assign({id:d.id}, d.data()); });
+        renderSuratWarga(data);
+      });
+    unsubList.push(u7);
+  }
+
   // Jumlah warga
   db.collection('warga').get().then(function(snap) {
     document.getElementById('stat-warga').textContent = snap.size;
@@ -1871,6 +2023,14 @@ function attachAdminListeners() {
       renderArsipAdmin(data);
     });
   unsubList.push(a6);
+
+  // Listener: Surat Digital (admin: semua permohonan)
+  var a7 = db.collection('surat').orderBy('createdAt','desc').limit(200)
+    .onSnapshot(function(snap) {
+      var data = snap.docs.map(function(d) { return Object.assign({id:d.id}, d.data()); });
+      renderSuratAdmin(data);
+    });
+  unsubList.push(a7);
 }
 
 // Hitung total jiwa (KK + anggota) dan update semua angka
@@ -2257,7 +2417,7 @@ function goPage(page) {
   var t = document.getElementById('page-' + page);
   if (t) { t.style.display = 'block'; t.classList.add('active'); }
   currentPage = page;
-  var nm = {profil:0, pengumuman:1, keuangan:2, galeri:3, arsip:4};
+  var nm = {profil:0, pengumuman:1, surat:2, keuangan:3, arsip:4};
   var ni = document.querySelectorAll('.nav-item');
   for (var j = 0; j < ni.length; j++) ni[j].classList.remove('active');
   if (nm[page] !== undefined && ni[nm[page]]) ni[nm[page]].classList.add('active');
@@ -2298,7 +2458,7 @@ function switchGaleri(type) {
 }
 
 function switchAdminTab(tab) {
-  ['pengumuman','warga','aspirasi','keuangan','galeri','arsip'].forEach(function(t) {
+  ['pengumuman','warga','aspirasi','keuangan','galeri','arsip','surat'].forEach(function(t) {
     var page = document.getElementById('admpage-' + t);
     if (page) page.style.display = t === tab ? 'block' : 'none';
     var btn = document.getElementById('admtab-' + t);
@@ -2593,6 +2753,150 @@ function closeModalOutside(e, id) { if (e.target === document.getElementById(id)
 
 // ══ TOAST ══
 var _toastTimer;
+// ══ SURAT DIGITAL ══
+
+function ajukanSurat(jenis) {
+  document.getElementById('surat-jenis').value = jenis;
+  document.getElementById('surat-jenis-label').textContent = jenis;
+  document.getElementById('judul-modal-surat').textContent = '📄 ' + jenis;
+  document.getElementById('group-surat-lainnya').style.display = jenis === 'Surat Lainnya' ? 'block' : 'none';
+  // Auto-isi dari profil warga
+  var nama = document.getElementById('profil-nama');
+  var hp   = document.getElementById('profil-hp');
+  var alamat = document.getElementById('profil-alamat');
+  if (nama)   document.getElementById('surat-nama').value   = nama.textContent !== '—' ? nama.textContent : '';
+  if (hp)     document.getElementById('surat-hp').value     = hp.textContent !== '—' ? hp.textContent : '';
+  if (alamat) document.getElementById('surat-alamat').value = alamat.textContent !== '—' ? alamat.textContent : '';
+  openModal('modal-ajukan-surat');
+}
+
+function kirimPermohonanSurat() {
+  if (!FIREBASE_READY) { showToast('⚠️ Firebase belum dikonfigurasi'); return; }
+  if (!currentUser)    { showToast('⚠️ Silakan login terlebih dahulu'); return; }
+  var jenis     = document.getElementById('surat-jenis').value;
+  var nama      = document.getElementById('surat-nama').value.trim();
+  var nik       = document.getElementById('surat-nik').value.trim();
+  var alamat    = document.getElementById('surat-alamat').value.trim();
+  var hp        = document.getElementById('surat-hp').value.trim();
+  var keperluan = document.getElementById('surat-keperluan').value.trim();
+  var judulLain = document.getElementById('surat-judul-lain').value.trim();
+  if (!nama || !alamat || !hp || !keperluan) { showToast('⚠️ Lengkapi semua data yang wajib diisi'); return; }
+  if (jenis === 'Surat Lainnya' && !judulLain) { showToast('⚠️ Tulis judul surat yang diinginkan'); return; }
+  showLoading(true);
+  db.collection('surat').add({
+    jenis:     jenis === 'Surat Lainnya' ? judulLain : jenis,
+    nama:      nama,
+    nik:       nik,
+    alamat:    alamat,
+    hp:        hp,
+    keperluan: keperluan,
+    uid:       currentUser.uid,
+    email:     currentUser.email,
+    status:    'menunggu',
+    nomorSurat: '',
+    catatan:   '',
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(function() {
+    showLoading(false);
+    closeModal('modal-ajukan-surat');
+    // Reset form
+    ['surat-nama','surat-nik','surat-alamat','surat-hp','surat-keperluan','surat-judul-lain']
+      .forEach(function(id){ document.getElementById(id).value = ''; });
+    showToast('✅ Permohonan surat berhasil dikirim! Admin RT akan memproses dalam 1x24 jam.');
+  }).catch(function(e){ showLoading(false); showToast('❌ ' + e.message); });
+}
+
+// Render daftar surat di halaman WARGA
+function renderSuratWarga(list) {
+  var el = document.getElementById('list-surat-warga');
+  if (!el) return;
+  if (!list.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📄</div>Belum ada permohonan surat</div>';
+    return;
+  }
+  var statusInfo = {
+    menunggu:  { label:'⏳ Menunggu', bg:'#FFF3E0', color:'#E65100' },
+    diproses:  { label:'🔄 Diproses', bg:'#E3F2FD', color:'#1565C0' },
+    approved:  { label:'✅ Disetujui', bg:'#E8F5E9', color:'#2E7D32' },
+    rejected:  { label:'❌ Ditolak',  bg:'#FFEBEE', color:'#C62828' }
+  };
+  el.innerHTML = list.map(function(s) {
+    var st = statusInfo[s.status] || statusInfo['menunggu'];
+    return '<div style="padding:14px 0;border-bottom:1px solid var(--gray-100)">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">'
+      + '<div style="flex:1">'
+      + '<div style="font-size:13px;font-weight:900;color:var(--gray-800)">📄 ' + escHtml(s.jenis) + '</div>'
+      + '<div style="font-size:11px;color:var(--gray-400);margin-top:2px">' + formatDate(s.createdAt) + '</div>'
+      + '<div style="font-size:11px;color:var(--gray-600);margin-top:4px">' + escHtml(s.keperluan) + '</div>'
+      + (s.nomorSurat ? '<div style="font-size:11px;font-weight:800;color:var(--blue);margin-top:4px">No. Surat: ' + escHtml(s.nomorSurat) + '</div>' : '')
+      + (s.catatan ? '<div style="font-size:11px;color:var(--gray-600);margin-top:4px;background:var(--gray-100);border-radius:6px;padding:6px">💬 ' + escHtml(s.catatan) + '</div>' : '')
+      + '</div>'
+      + '<span style="font-size:10px;font-weight:800;border-radius:20px;padding:4px 10px;background:' + st.bg + ';color:' + st.color + ';white-space:nowrap;flex-shrink:0">' + st.label + '</span>'
+      + '</div></div>';
+  }).join('');
+}
+
+// Render daftar surat di halaman ADMIN
+function renderSuratAdmin(list) {
+  var el = document.getElementById('adm-list-surat');
+  if (!el) return;
+  if (!list.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📄</div>Belum ada permohonan surat</div>';
+    return;
+  }
+  var statusInfo = {
+    menunggu:  { label:'⏳ Menunggu', bg:'#FFF3E0', color:'#E65100' },
+    diproses:  { label:'🔄 Diproses', bg:'#E3F2FD', color:'#1565C0' },
+    approved:  { label:'✅ Disetujui', bg:'#E8F5E9', color:'#2E7D32' },
+    rejected:  { label:'❌ Ditolak',  bg:'#FFEBEE', color:'#C62828' }
+  };
+  el.innerHTML = list.map(function(s) {
+    var st = statusInfo[s.status] || statusInfo['menunggu'];
+    return '<div style="padding:14px 0;border-bottom:1px solid var(--gray-100)">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">'
+      + '<div style="flex:1">'
+      + '<div style="font-size:13px;font-weight:900;color:var(--gray-800)">📄 ' + escHtml(s.jenis) + '</div>'
+      + '<div style="font-size:12px;font-weight:800;color:var(--gray-600);margin-top:2px">👤 ' + escHtml(s.nama) + '</div>'
+      + '<div style="font-size:11px;color:var(--gray-400)">📞 ' + escHtml(s.hp||'—') + ' · ' + formatDate(s.createdAt) + '</div>'
+      + '<div style="font-size:11px;color:var(--gray-600);margin-top:2px">' + escHtml(s.keperluan) + '</div>'
+      + '</div>'
+      + '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">'
+      + '<span style="font-size:10px;font-weight:800;border-radius:20px;padding:4px 10px;background:' + st.bg + ';color:' + st.color + '">' + st.label + '</span>'
+      + '<button onclick="bukaProsesSurat(\'' + s.id + '\',\'' + escHtml(s.jenis) + '\',\'' + escHtml(s.nama) + '\',\'' + escHtml(s.keperluan) + '\')" style="border:none;background:var(--blue-light);color:var(--blue);border-radius:6px;padding:6px 10px;font-size:11px;font-weight:800;cursor:pointer;font-family:Nunito,sans-serif">⚙️ Proses</button>'
+      + '</div></div></div>';
+  }).join('');
+}
+
+function bukaProsesSurat(id, jenis, nama, keperluan) {
+  document.getElementById('proses-surat-id').value       = id;
+  document.getElementById('proses-surat-jenis').textContent    = jenis;
+  document.getElementById('proses-surat-nama').textContent     = nama;
+  document.getElementById('proses-surat-keperluan').textContent = keperluan;
+  document.getElementById('proses-nomor-surat').value    = '';
+  document.getElementById('proses-catatan').value        = '';
+  openModal('modal-proses-surat');
+}
+
+function adminProsesSurat(status) {
+  if (!FIREBASE_READY) { showToast('⚠️ Firebase belum dikonfigurasi'); return; }
+  var id      = document.getElementById('proses-surat-id').value;
+  var nomor   = document.getElementById('proses-nomor-surat').value.trim();
+  var catatan = document.getElementById('proses-catatan').value.trim();
+  if (status === 'approved' && !nomor) { showToast('⚠️ Isi nomor surat terlebih dahulu'); return; }
+  if (status === 'rejected' && !catatan) { showToast('⚠️ Isi alasan penolakan di kolom catatan'); return; }
+  showLoading(true);
+  db.collection('surat').doc(id).update({
+    status:     status,
+    nomorSurat: nomor,
+    catatan:    catatan,
+    prosesAt:   firebase.firestore.FieldValue.serverTimestamp()
+  }).then(function() {
+    showLoading(false);
+    closeModal('modal-proses-surat');
+    showToast(status === 'approved' ? '✅ Surat disetujui! Warga akan melihat statusnya.' : '❌ Permohonan ditolak. Warga akan diberitahu.');
+  }).catch(function(e){ showLoading(false); showToast('❌ ' + e.message); });
+}
+
 function showToast(msg) {
   var t = document.getElementById('toast');
   if (!t) return;
