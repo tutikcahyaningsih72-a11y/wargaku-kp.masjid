@@ -1453,6 +1453,17 @@ function setupWargaDashboard(data, user) {
   if (headerSalam) headerSalam.textContent = 'Selamat datang, ' + sapaan + ' ' + nama.split(' ')[0];
   document.getElementById('profil-nama').textContent = nama;
   document.getElementById('profil-email').textContent = user ? user.email : '';
+
+  // Foto profil — tampilkan dari data tersimpan, atau ikon default jika belum ada
+  var fotoWrap = document.getElementById('kkPhotoPreview');
+  if (fotoWrap) {
+    if (data.foto) {
+      fotoWrap.innerHTML = '<img src="' + data.foto + '" alt="Foto">';
+    } else {
+      fotoWrap.innerHTML = '👤';
+    }
+  }
+
   document.getElementById('profil-hp').textContent = data.hp || '(belum diisi)';
   document.getElementById('profil-alamat').textContent = data.alamat || '(belum diisi)';
   document.getElementById('profil-status').textContent = data.status || '(belum diisi)';
@@ -2742,11 +2753,38 @@ function previewKKPhoto(event) {
   if (!file) return;
   var reader = new FileReader();
   reader.onload = function(e) {
-    var w = document.getElementById('kkPhotoPreview');
-    w.innerHTML = '<img src="' + e.target.result + '" alt="Foto">';
+    var img = new Image();
+    img.onload = function() {
+      // Kompres foto agar ukurannya kecil (max 400px, kualitas 80%)
+      var canvas = document.createElement('canvas');
+      var MAX = 400;
+      var w = img.width, h = img.height;
+      if (w > h) { if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; } }
+      else { if (h > MAX) { w = Math.round(w * MAX / h); h = MAX; } }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      var compressed = canvas.toDataURL('image/jpeg', 0.8);
+
+      // Tampilkan preview langsung
+      var wrap = document.getElementById('kkPhotoPreview');
+      wrap.innerHTML = '<img src="' + compressed + '" alt="Foto">';
+
+      // Simpan ke Firestore agar tidak hilang setelah logout
+      if (!FIREBASE_READY || !currentUser) { showToast('⚠️ Tidak bisa menyimpan foto'); return; }
+      showLoading(true);
+      db.collection('warga').doc(currentUser.uid).update({ foto: compressed })
+        .then(function() {
+          showLoading(false);
+          showToast('✅ Foto profil berhasil disimpan!');
+        })
+        .catch(function(e) {
+          showLoading(false);
+          showToast('❌ Gagal menyimpan foto: ' + e.message);
+        });
+    };
+    img.src = e.target.result;
   };
   reader.readAsDataURL(file);
-  showToast('📷 Foto berhasil diambil');
 }
 
 // ══ MODAL ══
