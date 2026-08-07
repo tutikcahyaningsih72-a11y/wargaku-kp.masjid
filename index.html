@@ -1288,19 +1288,42 @@ textarea.input-field{resize:none;min-height:90px}
     s.style.display = 'none';
     s.classList.remove('active');
   });
-  // Fade out setelah 2.5 detik → selalu tampil login
-  setTimeout(function() {
+
+  var sudahLanjut = false;
+
+  function lanjutKeLogin() {
+    if (sudahLanjut) return;
+    sudahLanjut = true;
     splash.classList.add('fade-out');
     setTimeout(function() {
       splash.style.display = 'none';
       splash.remove();
       splashDone = true;
-      // Selalu tampilkan halaman login setelah splash
-      // (warga harus login manual, sesi lama diabaikan)
       showScreen('screen-login');
       switchLoginTab('warga');
     }, 650);
-  }, 2500);
+  }
+
+  // Tombol "Lanjutkan" muncul setelah delay awal, di bawah tombol Install
+  var btnLanjut = document.createElement('button');
+  btnLanjut.id = 'btn-lanjut-splash';
+  btnLanjut.textContent = 'Lanjutkan ke Aplikasi →';
+  btnLanjut.style.cssText = 'display:none;position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:transparent;color:#666;border:none;font-size:13px;font-weight:700;font-family:Nunito,sans-serif;padding:10px 20px;cursor:pointer;text-decoration:underline;z-index:10001';
+  btnLanjut.onclick = lanjutKeLogin;
+  splash.appendChild(btnLanjut);
+
+  // Setelah 3 detik pertama, tampilkan tombol Lanjutkan manual
+  // (tombol Install PWA sudah muncul lebih dulu lewat event beforeinstallprompt jika tersedia)
+  setTimeout(function() {
+    btnLanjut.style.display = 'block';
+  }, 3000);
+
+  // Batas waktu maksimal 15 detik sebagai jaring pengaman —
+  // supaya splash tidak "macet" selamanya kalau user tidak menyentuh apa-apa
+  setTimeout(lanjutKeLogin, 15000);
+
+  // Simpan fungsi agar bisa dipanggil setelah tombol Install PWA diklik/selesai
+  window.lanjutDariSplash = lanjutKeLogin;
 })();
 
 // ══════════════════════════════════════════════════════════════
@@ -2974,6 +2997,7 @@ window.addEventListener('appinstalled', function() {
   deferredInstallPrompt = null;
   var btn = document.getElementById('btn-install-pwa');
   if (btn) btn.style.display = 'none';
+  if (window.lanjutDariSplash) window.lanjutDariSplash();
 });
 
 function installPWA() {
@@ -2985,6 +3009,9 @@ function installPWA() {
   deferredInstallPrompt.userChoice.then(function(result) {
     if (result.outcome === 'accepted') {
       showToast('✅ WargaKu sedang diinstall...');
+    } else {
+      // User memilih batal — tetap lanjutkan ke halaman login
+      if (window.lanjutDariSplash) window.lanjutDariSplash();
     }
     deferredInstallPrompt = null;
     var btn = document.getElementById('btn-install-pwa');
